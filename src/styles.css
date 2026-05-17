@@ -1,11 +1,14 @@
-@import "tailwindcss" source(none);
 @import url('https://fonts.googleapis.com/css2?family=Allura&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Tangerine:wght@400;700&display=swap');
+@import "tailwindcss" source(none);
 @import "tw-animate-css";
+
 
 
 @source "../src";
 
+
 @custom-variant dark (&:is(.dark *));
+
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -43,23 +46,28 @@
   --font-allura: 'Allura', cursive;
 }
 
+
 :root {
   --radius: 0.625rem;
+
 
   /* Royal Indian luxury palette */
   --ivory: oklch(0.97 0.018 80);
   --background: oklch(0.97 0.018 80);
   --foreground: oklch(0.25 0.08 25);
 
+
   --maroon: oklch(0.32 0.14 22);
   --gold: oklch(0.75 0.16 80);
   --gold-light: oklch(0.88 0.12 88);
   --magenta: oklch(0.5 0.22 0);
 
+
   --card: oklch(0.95 0.025 75);
   --card-foreground: oklch(0.25 0.08 25);
   --popover: oklch(0.97 0.018 80);
   --popover-foreground: oklch(0.25 0.08 25);
+
 
   --primary: oklch(0.32 0.14 22);
   --primary-foreground: oklch(0.97 0.018 80);
@@ -75,11 +83,13 @@
   --input: oklch(0.85 0.05 75);
   --ring: oklch(0.75 0.16 80);
 
+
   --gradient-gold: linear-gradient(135deg, oklch(0.65 0.16 70), oklch(0.88 0.14 88), oklch(0.65 0.16 70));
   --gradient-royal: linear-gradient(160deg, oklch(0.32 0.14 22), oklch(0.45 0.18 5), oklch(0.32 0.14 22));
   --shadow-royal: 0 20px 60px -20px oklch(0.32 0.14 22 / 0.5), 0 0 0 1px oklch(0.75 0.16 80 / 0.3);
   --shadow-glow: 0 0 40px oklch(0.85 0.18 80 / 0.6), 0 0 80px oklch(0.85 0.18 80 / 0.3);
 }
+
 
 @layer base {
   * { border-color: var(--color-border); }
@@ -91,6 +101,7 @@
   h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.03em; }
 }
 
+
 /* Decorative gold text */
 .text-gold-shimmer {
   background: linear-gradient(90deg, #6b4a08 0%, #a87a18 25%, #d4a335 50%, #a87a18 75%, #6b4a08 100%);
@@ -101,10 +112,12 @@
   animation: shimmer 4s ease-in-out infinite;
 }
 
+
 @keyframes shimmer {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
+
 
 @keyframes float-up {
   0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
@@ -113,32 +126,38 @@
   100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
 }
 
+
 @keyframes flower-fall {
   0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0; }
   10% { opacity: 1; }
   100% { transform: translateY(110vh) rotate(360deg) translateX(40px); opacity: 0; }
 }
 
+
 @keyframes gentle-float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
 }
+
 
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 20px oklch(0.85 0.18 80 / 0.4), 0 0 60px oklch(0.85 0.18 80 / 0.2); }
   50% { box-shadow: 0 0 40px oklch(0.85 0.18 80 / 0.8), 0 0 100px oklch(0.85 0.18 80 / 0.4); }
 }
 
+
 @keyframes envelope-flap {
   0% { transform: rotateX(0deg); }
   100% { transform: rotateX(-180deg); }
 }
+
 
 @keyframes seal-break {
   0% { transform: scale(1) rotate(0deg); opacity: 1; }
   50% { transform: scale(1.3) rotate(15deg); opacity: 1; }
   100% { transform: scale(2) rotate(45deg); opacity: 0; }
 }
+
 
 @keyframes curtain-left {
   0% { transform: translateX(0); }
@@ -149,12 +168,15 @@
   100% { transform: translateX(105%); }
 }
 
+
 @keyframes spin-slow { to { transform: rotate(360deg); } }
+
 
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
 
 .animate-fade-up { animation: fade-up 0.8s ease-out forwards; }
 .animate-gentle-float { animation: gentle-float 4s ease-in-out infinite; }
@@ -164,6 +186,7 @@
 .animate-sway { animation: sway 7s ease-in-out infinite; }
 .animate-shimmer-line { animation: shimmerLine 6s ease-in-out infinite; }
 
+
 @keyframes ambientDrift {
   0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
   10% { opacity: var(--o, 0.2); }
@@ -172,21 +195,25 @@
   100% { transform: translate3d(calc(var(--drift, 20px) * -1), 115vh, 0) rotate(360deg); opacity: 0; }
 }
 
+
 @keyframes sway {
   0%, 100% { transform: rotate(-3deg) translateY(0); }
   50% { transform: rotate(3deg) translateY(-6px); }
 }
+
 
 @keyframes shimmerLine {
   0%, 100% { opacity: 0.4; transform: scaleX(0.92); }
   50% { opacity: 1; transform: scaleX(1); }
 }
 
+
 @keyframes glow-pulse {
   0%, 100% { filter: drop-shadow(0 0 10px oklch(0.85 0.18 80 / 0.3)); }
   50% { filter: drop-shadow(0 0 28px oklch(0.85 0.18 80 / 0.7)); }
 }
 .animate-glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+
 
 @keyframes leaf-sway-l {
   0%, 100% { transform: rotate(-6deg) translateY(0); }
@@ -199,11 +226,13 @@
 .animate-leaf-l { animation: leaf-sway-l 6s ease-in-out infinite; transform-origin: top center; }
 .animate-leaf-r { animation: leaf-sway-r 6s ease-in-out infinite; transform-origin: top center; }
 
+
 @keyframes card-breathe {
   0%, 100% { box-shadow: 0 20px 60px -25px oklch(0.32 0.14 22 / 0.45), inset 0 0 0 1px oklch(0.88 0.14 88 / 0.4), 0 0 30px -10px oklch(0.85 0.18 80 / 0.25); }
   50% { box-shadow: 0 28px 80px -25px oklch(0.32 0.14 22 / 0.55), inset 0 0 0 1px oklch(0.88 0.14 88 / 0.6), 0 0 60px -10px oklch(0.85 0.18 80 / 0.5); }
 }
 .animate-card-breathe { animation: card-breathe 5s ease-in-out infinite; }
+
 
 @keyframes name-shimmer {
   0%, 100% { background-position: 0% 50%; filter: drop-shadow(0 2px 8px oklch(0.32 0.14 22 / 0.25)); }
@@ -217,6 +246,7 @@
   -webkit-text-fill-color: transparent;
   animation: name-shimmer 6s ease-in-out infinite;
 }
+
 
 .family-card {
   background:
@@ -248,6 +278,7 @@
   50% { background-position: -50% 50%; }
 }
 
+
 @keyframes lotus-bloom {
   0% { transform: scale(0.6) rotate(-10deg); opacity: 0; }
   60% { transform: scale(1.05) rotate(2deg); opacity: 1; }
@@ -255,8 +286,10 @@
 }
 .animate-lotus-bloom { animation: lotus-bloom 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 
+
 /* soft reveal helpers used inline by ScrollReveal */
 html { scroll-behavior: smooth; }
+
 
 /* Ornamental divider */
 .ornament-divider {
@@ -275,17 +308,21 @@ html { scroll-behavior: smooth; }
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
+
 .gold-border {
   border: 1px solid oklch(0.75 0.16 80 / 0.5);
   box-shadow: inset 0 0 0 1px oklch(0.88 0.14 88 / 0.3), 0 10px 40px -10px oklch(0.32 0.14 22 / 0.3);
 }
 
+
 .scratch-canvas { cursor: grab; touch-action: none; }
 .scratch-canvas:active { cursor: grabbing; }
+
 
 /* ========== Wedding Knot Divider ==========
    Two cloths slide in from the extreme left and right of the viewport,
    meet in the middle, and a glowing gold knot ties them together.
+
 
    Timing:
      0.0s – 1.1s : cloths sweep in
@@ -311,6 +348,7 @@ html { scroll-behavior: smooth; }
   filter: drop-shadow(0 8px 18px oklch(0.32 0.14 22 / 0.28));
 }
 
+
 /* Cloths start fully off-screen and slide to their resting position. */
 .cloth {
   opacity: 0;
@@ -321,9 +359,11 @@ html { scroll-behavior: smooth; }
 .cloth-l { transform: translateX(-100%); }
 .cloth-r { transform: translateX(100%); }
 
+
 .knot-divider.is-tied .cloth   { opacity: 1; }
 .knot-divider.is-tied .cloth-l,
 .knot-divider.is-tied .cloth-r { transform: translateX(0); }
+
 
 /* Tassels drop after the knot is formed. */
 .tassels {
@@ -341,6 +381,7 @@ html { scroll-behavior: smooth; }
   transform-origin: center top;
 }
 
+
 /* Knot core pops in just as the two cloths meet. */
 .knot-core {
   opacity: 0;
@@ -357,6 +398,7 @@ html { scroll-behavior: smooth; }
   transform-origin: center;
 }
 
+
 /* Sparkle bursts the instant the knot ties. */
 .knot-burst {
   opacity: 0;
@@ -372,6 +414,7 @@ html { scroll-behavior: smooth; }
   35%  { transform: scale(1.6); opacity: 1; }
   100% { transform: scale(3.2); opacity: 0; }
 }
+
 
 
 /* Family-section palm leaves anchored to viewport edges */
@@ -395,6 +438,7 @@ html { scroll-behavior: smooth; }
 .edge-leaf.left  { left:  -80px; transform-origin: top left;  animation: edge-sway-l 8s ease-in-out infinite; }
 .edge-leaf.right { right: -80px; transform-origin: top right; animation: edge-sway-r 8s ease-in-out infinite; }
 
+
 /* Lantern shower — floating fairy lights */
 @keyframes lantern-rise {
   0%   { transform: translate3d(0, 0, 0) scale(0.5); opacity: 0; }
@@ -411,12 +455,14 @@ html { scroll-behavior: smooth; }
   50%      { opacity: 1; }
 }
 
+
 @keyframes scroll-hint {
   0%   { opacity: 0; transform: translateY(-6px); }
   20%  { opacity: 0.85; transform: translateY(0); }
   75%  { opacity: 0.85; transform: translateY(0); }
   100% { opacity: 0; transform: translateY(6px); }
 }
+
 
 /* Rolled letter / scroll unfurl animation */
 @keyframes scroll-unfurl {
@@ -485,6 +531,7 @@ html { scroll-behavior: smooth; }
   opacity: 0.85;
 }
 
+
 .script-name-fix {
   overflow: visible !important;
   line-height: 1.4 !important;
@@ -496,10 +543,10 @@ html { scroll-behavior: smooth; }
   font-feature-settings: "liga" 0, "clig" 0 !important;
 }
 
+
 .font-script {
   font-variant-ligatures: none !important;
   -webkit-font-variant-ligatures: none !important;
   font-feature-settings: "liga" 0, "clig" 0 !important;
   overflow: visible !important;
 }
-
