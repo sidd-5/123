@@ -1,0 +1,504 @@
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Allura&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Tangerine:wght@400;700&display=swap');
+
+@source "../src";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-maroon: var(--maroon);
+  --color-magenta: var(--magenta);
+  --color-ivory: var(--ivory);
+  --font-display: 'Cinzel Decorative', serif;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-tangerine: 'Tangerine', cursive;
+  --font-allura: 'Allura', cursive;
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* Royal Indian luxury palette */
+  --ivory: oklch(0.97 0.018 80);
+  --background: oklch(0.97 0.018 80);
+  --foreground: oklch(0.25 0.08 25);
+
+  --maroon: oklch(0.32 0.14 22);
+  --gold: oklch(0.75 0.16 80);
+  --gold-light: oklch(0.88 0.12 88);
+  --magenta: oklch(0.5 0.22 0);
+
+  --card: oklch(0.95 0.025 75);
+  --card-foreground: oklch(0.25 0.08 25);
+  --popover: oklch(0.97 0.018 80);
+  --popover-foreground: oklch(0.25 0.08 25);
+
+  --primary: oklch(0.32 0.14 22);
+  --primary-foreground: oklch(0.97 0.018 80);
+  --secondary: oklch(0.75 0.16 80);
+  --secondary-foreground: oklch(0.25 0.08 25);
+  --muted: oklch(0.92 0.03 75);
+  --muted-foreground: oklch(0.45 0.08 30);
+  --accent: oklch(0.5 0.22 0);
+  --accent-foreground: oklch(0.97 0.018 80);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.97 0.018 80);
+  --border: oklch(0.75 0.16 80 / 35%);
+  --input: oklch(0.85 0.05 75);
+  --ring: oklch(0.75 0.16 80);
+
+  --gradient-gold: linear-gradient(135deg, oklch(0.65 0.16 70), oklch(0.88 0.14 88), oklch(0.65 0.16 70));
+  --gradient-royal: linear-gradient(160deg, oklch(0.32 0.14 22), oklch(0.45 0.18 5), oklch(0.32 0.14 22));
+  --shadow-royal: 0 20px 60px -20px oklch(0.32 0.14 22 / 0.5), 0 0 0 1px oklch(0.75 0.16 80 / 0.3);
+  --shadow-glow: 0 0 40px oklch(0.85 0.18 80 / 0.6), 0 0 80px oklch(0.85 0.18 80 / 0.3);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-serif);
+  }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.03em; }
+}
+
+/* Decorative gold text */
+.text-gold-shimmer {
+  background: linear-gradient(90deg, #6b4a08 0%, #a87a18 25%, #d4a335 50%, #a87a18 75%, #6b4a08 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes float-up {
+  0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes flower-fall {
+  0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg) translateX(40px); opacity: 0; }
+}
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px oklch(0.85 0.18 80 / 0.4), 0 0 60px oklch(0.85 0.18 80 / 0.2); }
+  50% { box-shadow: 0 0 40px oklch(0.85 0.18 80 / 0.8), 0 0 100px oklch(0.85 0.18 80 / 0.4); }
+}
+
+@keyframes envelope-flap {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-180deg); }
+}
+
+@keyframes seal-break {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.3) rotate(15deg); opacity: 1; }
+  100% { transform: scale(2) rotate(45deg); opacity: 0; }
+}
+
+@keyframes curtain-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-105%); }
+}
+@keyframes curtain-right {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(105%); }
+}
+
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up { animation: fade-up 0.8s ease-out forwards; }
+.animate-gentle-float { animation: gentle-float 4s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 2.5s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 30s linear infinite; }
+.animate-spin-slower { animation: spin-slow 80s linear infinite; }
+.animate-sway { animation: sway 7s ease-in-out infinite; }
+.animate-shimmer-line { animation: shimmerLine 6s ease-in-out infinite; }
+
+@keyframes ambientDrift {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+  10% { opacity: var(--o, 0.2); }
+  50% { transform: translate3d(var(--drift, 20px), 55vh, 0) rotate(180deg); }
+  90% { opacity: var(--o, 0.2); }
+  100% { transform: translate3d(calc(var(--drift, 20px) * -1), 115vh, 0) rotate(360deg); opacity: 0; }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg) translateY(0); }
+  50% { transform: rotate(3deg) translateY(-6px); }
+}
+
+@keyframes shimmerLine {
+  0%, 100% { opacity: 0.4; transform: scaleX(0.92); }
+  50% { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { filter: drop-shadow(0 0 10px oklch(0.85 0.18 80 / 0.3)); }
+  50% { filter: drop-shadow(0 0 28px oklch(0.85 0.18 80 / 0.7)); }
+}
+.animate-glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+
+@keyframes leaf-sway-l {
+  0%, 100% { transform: rotate(-6deg) translateY(0); }
+  50% { transform: rotate(4deg) translateY(-4px); }
+}
+@keyframes leaf-sway-r {
+  0%, 100% { transform: scaleX(-1) rotate(-6deg) translateY(0); }
+  50% { transform: scaleX(-1) rotate(4deg) translateY(-4px); }
+}
+.animate-leaf-l { animation: leaf-sway-l 6s ease-in-out infinite; transform-origin: top center; }
+.animate-leaf-r { animation: leaf-sway-r 6s ease-in-out infinite; transform-origin: top center; }
+
+@keyframes card-breathe {
+  0%, 100% { box-shadow: 0 20px 60px -25px oklch(0.32 0.14 22 / 0.45), inset 0 0 0 1px oklch(0.88 0.14 88 / 0.4), 0 0 30px -10px oklch(0.85 0.18 80 / 0.25); }
+  50% { box-shadow: 0 28px 80px -25px oklch(0.32 0.14 22 / 0.55), inset 0 0 0 1px oklch(0.88 0.14 88 / 0.6), 0 0 60px -10px oklch(0.85 0.18 80 / 0.5); }
+}
+.animate-card-breathe { animation: card-breathe 5s ease-in-out infinite; }
+
+@keyframes name-shimmer {
+  0%, 100% { background-position: 0% 50%; filter: drop-shadow(0 2px 8px oklch(0.32 0.14 22 / 0.25)); }
+  50% { background-position: 100% 50%; filter: drop-shadow(0 4px 14px oklch(0.5 0.22 0 / 0.35)); }
+}
+.text-maroon-shimmer {
+  background: linear-gradient(90deg, oklch(0.32 0.14 22), oklch(0.5 0.22 0), oklch(0.32 0.14 22));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: name-shimmer 6s ease-in-out infinite;
+}
+
+.family-card {
+  background:
+    radial-gradient(circle at 20% 0%, oklch(0.93 0.06 75 / 0.6), transparent 55%),
+    radial-gradient(circle at 80% 100%, oklch(0.85 0.10 30 / 0.35), transparent 55%),
+    linear-gradient(180deg, oklch(0.98 0.015 80), oklch(0.94 0.035 75));
+  backdrop-filter: blur(2px);
+  position: relative;
+  overflow: hidden;
+}
+.family-card::before {
+  content: '';
+  position: absolute; inset: 8px;
+  border: 1px solid oklch(0.75 0.16 80 / 0.45);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.family-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 30%, oklch(1 0 0 / 0.35) 50%, transparent 70%);
+  background-size: 250% 250%;
+  animation: card-sheen 8s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+@keyframes card-sheen {
+  0%, 100% { background-position: 200% 50%; }
+  50% { background-position: -50% 50%; }
+}
+
+@keyframes lotus-bloom {
+  0% { transform: scale(0.6) rotate(-10deg); opacity: 0; }
+  60% { transform: scale(1.05) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.animate-lotus-bloom { animation: lotus-bloom 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* soft reveal helpers used inline by ScrollReveal */
+html { scroll-behavior: smooth; }
+
+/* Ornamental divider */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--gold);
+}
+.ornament-divider::before,
+.ornament-divider::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  max-width: 120px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.gold-border {
+  border: 1px solid oklch(0.75 0.16 80 / 0.5);
+  box-shadow: inset 0 0 0 1px oklch(0.88 0.14 88 / 0.3), 0 10px 40px -10px oklch(0.32 0.14 22 / 0.3);
+}
+
+.scratch-canvas { cursor: grab; touch-action: none; }
+.scratch-canvas:active { cursor: grabbing; }
+
+/* ========== Wedding Knot Divider ==========
+   Two cloths slide in from the extreme left and right of the viewport,
+   meet in the middle, and a glowing gold knot ties them together.
+
+   Timing:
+     0.0s – 1.1s : cloths sweep in
+     1.1s – 1.7s : knot core pops + tassels drop
+     1.5s – 2.7s : sparkle bursts
+*/
+.knot-divider {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);   /* break out of any parent padding */
+  height: 160px;
+  pointer-events: none;
+  overflow: hidden;                /* hide cloths while off-screen */
+}
+@media (max-width: 768px) {
+  .knot-divider { height: 110px; }
+}
+.knot-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 8px 18px oklch(0.32 0.14 22 / 0.28));
+}
+
+/* Cloths start fully off-screen and slide to their resting position. */
+.cloth {
+  opacity: 0;
+  transition:
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease-out;
+}
+.cloth-l { transform: translateX(-100%); }
+.cloth-r { transform: translateX(100%); }
+
+.knot-divider.is-tied .cloth   { opacity: 1; }
+.knot-divider.is-tied .cloth-l,
+.knot-divider.is-tied .cloth-r { transform: translateX(0); }
+
+/* Tassels drop after the knot is formed. */
+.tassels {
+  opacity: 0;
+  transform: translateY(-12px) scaleY(0.4);
+  transform-origin: 500px 80px;
+  transform-box: fill-box;
+  transition:
+    transform 0.6s cubic-bezier(0.34, 1.4, 0.64, 1) 1.25s,
+    opacity   0.4s ease-out 1.25s;
+}
+.knot-divider.is-tied .tassels {
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+  transform-origin: center top;
+}
+
+/* Knot core pops in just as the two cloths meet. */
+.knot-core {
+  opacity: 0;
+  transform: scale(0) rotate(-15deg);
+  transform-origin: 500px 80px;
+  transform-box: fill-box;
+  transition:
+    transform 0.55s cubic-bezier(0.34, 1.7, 0.64, 1) 1.05s,
+    opacity   0.3s ease-out 1.05s;
+}
+.knot-divider.is-tied .knot-core {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  transform-origin: center;
+}
+
+/* Sparkle bursts the instant the knot ties. */
+.knot-burst {
+  opacity: 0;
+  transform-origin: 500px 80px;
+  transform-box: fill-box;
+  transform: scale(0);
+}
+.knot-divider.is-tied .knot-burst {
+  animation: knot-burst 1.2s cubic-bezier(0.22, 1, 0.36, 1) 1.45s forwards;
+}
+@keyframes knot-burst {
+  0%   { transform: scale(0);   opacity: 0; }
+  35%  { transform: scale(1.6); opacity: 1; }
+  100% { transform: scale(3.2); opacity: 0; }
+}
+
+
+/* Family-section palm leaves anchored to viewport edges */
+@keyframes edge-sway-l {
+  0%, 100% { transform: translateX(0) rotate(-4deg); }
+  50%      { transform: translateX(4px) rotate(3deg); }
+}
+@keyframes edge-sway-r {
+  0%, 100% { transform: scaleX(-1) translateX(0) rotate(-4deg); }
+  50%      { transform: scaleX(-1) translateX(4px) rotate(3deg); }
+}
+.edge-leaf {
+  position: absolute;
+  width: 280px;
+  max-width: 32vw;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.55;
+  filter: drop-shadow(0 6px 14px oklch(0.32 0.14 22 / 0.18));
+}
+.edge-leaf.left  { left:  -80px; transform-origin: top left;  animation: edge-sway-l 8s ease-in-out infinite; }
+.edge-leaf.right { right: -80px; transform-origin: top right; animation: edge-sway-r 8s ease-in-out infinite; }
+
+/* Lantern shower — floating fairy lights */
+@keyframes lantern-rise {
+  0%   { transform: translate3d(0, 0, 0) scale(0.5); opacity: 0; }
+  10%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translate3d(var(--drift, 0), -110vh, 0) scale(1); opacity: 0; }
+}
+@keyframes lantern-twinkle {
+  0%, 100% { opacity: 0.7; transform: scale(0.9); }
+  50%      { opacity: 1;   transform: scale(1.15); }
+}
+@keyframes lantern-glow-pulse {
+  0%, 100% { opacity: 0.85; }
+  50%      { opacity: 1; }
+}
+
+@keyframes scroll-hint {
+  0%   { opacity: 0; transform: translateY(-6px); }
+  20%  { opacity: 0.85; transform: translateY(0); }
+  75%  { opacity: 0.85; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+
+/* Rolled letter / scroll unfurl animation */
+@keyframes scroll-unfurl {
+  0%   { transform: scaleY(0.02); opacity: 0; filter: blur(4px); }
+  40%  { transform: scaleY(0.6);  opacity: 1; filter: blur(0); }
+  100% { transform: scaleY(1);    opacity: 1; filter: blur(0); }
+}
+@keyframes scroll-content-fade {
+  0%, 50% { opacity: 0; transform: translateY(8px); }
+  100%    { opacity: 1; transform: translateY(0); }
+}
+/* Elegant framed missive */
+@keyframes missive-rise {
+  0%   { opacity: 0; transform: translateY(18px) scale(0.97); filter: blur(4px); }
+  100% { opacity: 1; transform: translateY(0)    scale(1);    filter: blur(0); }
+}
+.missive {
+  animation: missive-rise 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.missive-frame {
+  background:
+    linear-gradient(135deg,
+      oklch(0.62 0.14 75) 0%,
+      oklch(0.92 0.13 88) 25%,
+      oklch(0.78 0.16 80) 50%,
+      oklch(0.92 0.13 88) 75%,
+      oklch(0.62 0.14 75) 100%);
+  background-size: 200% 200%;
+  animation: shimmer 8s ease-in-out infinite;
+  box-shadow:
+    0 30px 70px -25px oklch(0.32 0.14 22 / 0.45),
+    0 10px 24px -12px oklch(0.32 0.14 22 / 0.35),
+    inset 0 0 0 1px oklch(0.32 0.14 22 / 0.2);
+}
+.missive-parchment {
+  background:
+    radial-gradient(ellipse at 18% 8%, oklch(0.99 0.02 85 / 0.9), transparent 55%),
+    radial-gradient(ellipse at 82% 92%, oklch(0.86 0.06 60 / 0.55), transparent 60%),
+    linear-gradient(180deg, oklch(0.98 0.02 82), oklch(0.93 0.04 72));
+  box-shadow:
+    inset 0 0 0 1px oklch(0.75 0.16 80 / 0.45),
+    inset 0 0 80px oklch(0.85 0.10 70 / 0.35),
+    inset 0 0 0 6px oklch(0.97 0.02 80),
+    inset 0 0 0 7px oklch(0.75 0.16 80 / 0.55);
+}
+.missive-corner {
+  position: absolute;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.85;
+  text-shadow: 0 1px 0 oklch(0.97 0.02 80), 0 2px 6px oklch(0.32 0.14 22 / 0.25);
+  pointer-events: none;
+}
+.missive-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+}
+.missive-line {
+  display: block;
+  height: 1px;
+  width: clamp(40px, 22%, 110px);
+  background: linear-gradient(90deg, transparent, var(--gold) 45%, var(--gold) 55%, transparent);
+  opacity: 0.85;
+}
+
+.script-name-fix {
+  overflow: visible !important;
+  line-height: 1.4 !important;
+  padding-top: 0.8rem !important;
+  padding-bottom: 0.2rem !important;
+  display: block;
+  font-variant-ligatures: none !important;
+  -webkit-font-variant-ligatures: none !important;
+  font-feature-settings: "liga" 0, "clig" 0 !important;
+}
+
+.font-script {
+  font-variant-ligatures: none !important;
+  -webkit-font-variant-ligatures: none !important;
+  font-feature-settings: "liga" 0, "clig" 0 !important;
+  overflow: visible !important;
+}
+

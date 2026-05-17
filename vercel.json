@@ -1,0 +1,5 @@
+{
+  "buildCommand": "node vercel-build.mjs",
+  "outputDirectory": ".vercel/output",
+  "installCommand": "npm install"
+}
