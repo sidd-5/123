@@ -3,11 +3,9 @@ import { execSync } from "node:child_process";
 import { cpSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 
-// 1. Run Vite build
 console.log("Building with Vite...");
 execSync("npx vite build", { stdio: "inherit" });
 
-// 2. Prepare .vercel/output directory structure
 const OUTPUT = ".vercel/output";
 const STATIC = join(OUTPUT, "static");
 const FUNC = join(OUTPUT, "functions", "ssr.func");
@@ -16,24 +14,84 @@ rmSync(OUTPUT, { recursive: true, force: true });
 mkdirSync(STATIC, { recursive: true });
 mkdirSync(FUNC, { recursive: true });
 
-// 3. Copy client assets to static
 console.log("Copying static assets...");
 cpSync("dist/client", STATIC, { recursive: true });
 
-// 4. Write a temporary entry point for esbuild
+// Write the new adapter entry point
 const ENTRY_SRC = "dist/server/_vercel-entry.mjs";
 writeFileSync(
   ENTRY_SRC,
-  `import server from "./server.js";
+  `
+import { createServer } from "node:http";
+import { Readable } from "node:stream";
+import handler from "./server.js";
 
-export default async function handler(req) {
-  return await server.fetch(req);
+// Convert Node IncomingMessage -> Web Request
+async function toWebRequest(req) {
+  const host =
+    req.headers["x-forwarded-host"] ||
+    req.headers["host"] ||
+    "localhost";
+  const proto =
+    req.headers["x-forwarded-proto"] ||
+    (host.startsWith("localhost") ? "http" : "https");
+  const url = new URL(req.url, \`\${proto}://\${host}\`);
+
+  const headers = new Headers();
+  for (const [key, value] of Object.entries(req.headers)) {
+    if (value) headers.set(key, Array.isArray(value) ? value.join(", ") : value);
+  }
+
+  const hasBody = req.method !== "GET" && req.method !== "HEAD";
+  let body = undefined;
+  if (hasBody) {
+    body = await new Promise((resolve, reject) => {
+      const chunks = [];
+      req.on("data", (chunk) => chunks.push(chunk));
+      req.on("end", () => resolve(Buffer.concat(chunks)));
+      req.on("error", reject);
+    });
+  }
+
+  return new Request(url.toString(), {
+    method: req.method,
+    headers,
+    body: hasBody ? body : undefined,
+  });
+}
+
+// Convert Web Response -> Node ServerResponse
+async function sendWebResponse(webRes, res) {
+  res.statusCode = webRes.status;
+  for (const [key, value] of webRes.headers.entries()) {
+    res.setHeader(key, value);
+  }
+  if (webRes.body) {
+    const reader = webRes.body.getReader();
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      res.write(value);
+    }
+  }
+  res.end();
+}
+
+export default async function vercelHandler(req, res) {
+  try {
+    const webRequest = await toWebRequest(req);
+    const webResponse = await handler.fetch(webRequest, {}, {});
+    await sendWebResponse(webResponse, res);
+  } catch (err) {
+    console.error("SSR handler error:", err);
+    res.statusCode = 500;
+    res.end("Internal Server Error");
+  }
 }
 `
 );
 
-// 5. Bundle the server + deps into a single file with esbuild
-console.log("Bundling serverless function with esbuild...");
+console.log("Bundling serverless function...");
 const banner = `import{createRequire as __cr}from"node:module";import{fileURLToPath as __fu}from"node:url";import{dirname as __dn}from"node:path";const require=__cr(import.meta.url);const __filename=__fu(import.meta.url);const __dirname=__dn(__filename);`;
 execSync(
   [
@@ -52,7 +110,6 @@ execSync(
   { stdio: "inherit" }
 );
 
-// 6. Write .vc-config.json for the function
 writeFileSync(
   join(FUNC, ".vc-config.json"),
   JSON.stringify(
@@ -60,14 +117,13 @@ writeFileSync(
       runtime: "nodejs22.x",
       handler: "index.mjs",
       launcherType: "Nodejs",
-      supportsResponseStreaming: true,
+      supportsResponseStreaming: false,
     },
     null,
     2
   ) + "\n"
 );
 
-// 7. Write top-level config.json
 writeFileSync(
   join(OUTPUT, "config.json"),
   JSON.stringify(
@@ -88,4 +144,4 @@ writeFileSync(
   ) + "\n"
 );
 
-console.log("Vercel Build Output ready at .vercel/output/");
+console.log("Done! .vercel/output ready.");
